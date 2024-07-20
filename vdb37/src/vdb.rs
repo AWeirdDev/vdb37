@@ -25,7 +25,10 @@ impl VectorDatabase {
         self.kd_tree.nearest(&query, k)
     }
 
-    fn __repr__(&self) -> &str {
-        "VectorDatabase()"
+    fn __repr__(&self) -> String {
+        if let Some(root) = &self.kd_tree.root {
+            return format!("VectorDatabase({})", root.vector);
+        }
+        format!("VectorDatabase(None)")
     }
 }

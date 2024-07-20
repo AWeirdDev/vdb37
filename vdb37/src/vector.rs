@@ -1,4 +1,5 @@
 use pyo3::prelude::*;
+use std::fmt;
 
 #[pyclass]
 #[derive(Clone, Default)]
@@ -24,5 +25,11 @@ impl Vector {
 
     pub fn __repr__(&self) -> String {
         format!("<Vector coordinates={:?}>", self.coordinates)
+    }
+}
+
+impl fmt::Display for Vector {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "<Vector ln={:?}>", self.coordinates.len())
     }
 }

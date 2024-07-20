@@ -3,13 +3,13 @@ use std::cmp::Ordering;
 use crate::vector::Vector;
 
 pub struct KDNode {
-    vector: Vector,
+    pub vector: Vector,
     left: Option<Box<KDNode>>,
     right: Option<Box<KDNode>>,
 }
 
 pub struct KDTree {
-    root: Option<Box<KDNode>>,
+    pub root: Option<Box<KDNode>>,
 }
 
 impl KDTree {
