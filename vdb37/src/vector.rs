@@ -23,6 +23,14 @@ impl Vector {
             .sqrt()
     }
 
+    pub fn within(&self, lower: &Vector, upper: &Vector) -> bool {
+        self.coordinates
+            .iter()
+            .zip(&lower.coordinates)
+            .zip(&upper.coordinates)
+            .all(|((&c, &low), &up)| c >= low && c <= up)
+    }
+
     pub fn __repr__(&self) -> String {
         format!("<Vector coordinates={:?}>", self.coordinates)
     }

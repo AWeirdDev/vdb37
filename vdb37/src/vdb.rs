@@ -4,14 +4,15 @@ use crate::kd_tree::KDTree;
 use crate::vector::Vector;
 
 #[pyclass]
+#[derive(Clone)]
 pub struct VectorDatabase {
-    kd_tree: KDTree,
+    pub kd_tree: KDTree,
 }
 
 #[pymethods]
 impl VectorDatabase {
     #[new]
-    fn new() -> Self {
+    pub fn new() -> Self {
         Self {
             kd_tree: KDTree::new(),
         }

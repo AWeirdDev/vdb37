@@ -2,12 +2,14 @@ use std::cmp::Ordering;
 
 use crate::vector::Vector;
 
+#[derive(Clone)]
 pub struct KDNode {
     pub vector: Vector,
     left: Option<Box<KDNode>>,
     right: Option<Box<KDNode>>,
 }
 
+#[derive(Clone)]
 pub struct KDTree {
     pub root: Option<Box<KDNode>>,
 }

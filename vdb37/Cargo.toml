@@ -9,5 +9,5 @@ name = "vdb37"
 crate-type = ["cdylib"]
 
 [dependencies]
+bincode = { version = "1.3.3", features = ["i128"] }
 pyo3 = "0.22.0"
-fastembed = "3"
