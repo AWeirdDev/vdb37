@@ -1,7 +1,8 @@
-import vdb37
+from vdb37 import VectorDatabase, Vector
 
-db = vdb37.VectorDatabase()
-db.insert(vdb37.Vector([1, 2, 3]))
-db.insert(vdb37.Vector([4, 5, 6]))
-print(db.search(vdb37.Vector([10, 15, 20]), k=1))
-print(db)
+vector = Vector([1.0, 2.0, 3.0], meta="worst mood")
+assert vector.within(Vector([0.0, 0.0, 0.0]), Vector([10.0, 10.0, 10.0]))
+
+db = VectorDatabase()
+db.insert(vector)
+print(db.search(Vector([1, 2, 2]), k=1)[0].meta)

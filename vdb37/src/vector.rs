@@ -1,17 +1,22 @@
 use pyo3::prelude::*;
 use std::fmt;
 
-#[pyclass]
 #[derive(Clone, Default)]
+#[pyclass]
 pub struct Vector {
     pub coordinates: Vec<f64>,
+    pub meta: String,
 }
 
 #[pymethods]
 impl Vector {
     #[new]
-    pub fn new(coordinates: Vec<f64>) -> Self {
-        Self { coordinates }
+    #[pyo3(signature = (coordinates, *, meta=None))]
+    pub fn new(coordinates: Vec<f64>, meta: Option<String>) -> Self {
+        Self {
+            coordinates,
+            meta: meta.unwrap_or(String::from("")),
+        }
     }
 
     pub fn distance(&self, other: &Vector) -> f64 {
@@ -32,12 +37,31 @@ impl Vector {
     }
 
     pub fn __repr__(&self) -> String {
-        format!("<Vector coordinates={:?}>", self.coordinates)
+        format!(
+            "<Vector coordinates_ln={:?} meta={:?}>",
+            self.coordinates.len(),
+            self.meta
+        )
+    }
+
+    #[getter]
+    pub fn coordinates(&self) -> Vec<f64> {
+        self.coordinates.to_owned()
+    }
+
+    #[getter]
+    pub fn meta(&self) -> String {
+        self.meta.to_owned()
     }
 }
 
 impl fmt::Display for Vector {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "<Vector ln={:?}>", self.coordinates.len())
+        write!(
+            f,
+            "<Vector coordinates_ln={:?} meta={:?}>",
+            self.coordinates.len(),
+            self.meta
+        )
     }
 }
