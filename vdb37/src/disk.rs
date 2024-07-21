@@ -1,4 +1,4 @@
-use std::fs::File;
+use std::fs::{self, File};
 use std::path::Path;
 
 use pyo3::prelude::*;
@@ -6,18 +6,16 @@ use pyo3::prelude::*;
 use crate::vdb::VectorDatabase;
 use crate::vector::Vector;
 
-#[allow(dead_code)]
-pub fn save(base_path: String, key: String, db: VectorDatabase) {
-    let path = Path::new(&base_path).join(key);
+pub fn save(base_path: String, db: VectorDatabase) {
+    let path = Path::new(&base_path);
     std::fs::create_dir_all(path.to_owned()).expect("Could not create directory");
 
-    if matches!(db.kd_tree.root, None) {
-        panic!("Database is empty");
+    for (i, vec) in db.vectors.iter().enumerate() {
+        create_bin(
+            format!("{}/vector_{}.bin", path.to_str().unwrap(), i),
+            vec.clone(),
+        );
     }
-    create_bin(
-        format!("{}/vector.bin", path.to_str().unwrap()),
-        db.kd_tree.root.unwrap().vector,
-    );
 }
 
 #[pyfunction]
@@ -27,14 +25,15 @@ pub fn create_bin(filename: String, vector: Vector) {
         .expect("Could not serialize");
 }
 
-#[allow(dead_code)]
-pub fn load(base_path: String, key: String) -> VectorDatabase {
-    let path = Path::new(&base_path).join(key);
-
-    let bin = load_bin(format!("{}/vector.bin", path.to_str().unwrap()));
+pub fn load(base_path: String) -> VectorDatabase {
+    let path = Path::new(&base_path);
     let mut db = VectorDatabase::new();
 
-    db.kd_tree.insert(bin);
+    for entry in fs::read_dir(path).expect("Could not read directory") {
+        let entry = entry.expect("Could not read entry while reading directory");
+        db.insert(load_bin(entry.path().to_str().unwrap().to_string()));
+    }
+
     db
 }
 

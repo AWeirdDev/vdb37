@@ -2,11 +2,17 @@ use std::cmp::Ordering;
 
 use crate::vector::Vector;
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct KDNode {
     pub vector: Vector,
-    left: Option<Box<KDNode>>,
-    right: Option<Box<KDNode>>,
+    pub left: Option<Box<KDNode>>,
+    pub right: Option<Box<KDNode>>,
+}
+
+impl KDNode {
+    pub fn serialize(&self) -> Vec<f64> {
+        self.vector.coordinates.clone()
+    }
 }
 
 #[derive(Clone)]

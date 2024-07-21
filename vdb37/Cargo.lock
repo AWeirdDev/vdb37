@@ -194,7 +194,7 @@ checksum = "c7de7d73e1754487cb58364ee906a499937a0dfabd86bcb980fa99ec8c8fa2ce"
 
 [[package]]
 name = "vdb37"
-version = "0.1.0"
+version = "0.5.0"
 dependencies = [
  "bincode",
  "pyo3",

@@ -11,22 +11,22 @@ class Vector:
 
     # ~
 
-    def distance(self, other: List[float]) -> float:
+    def distance(self, other: Vector) -> float:
         """Calculates the distance between two vectors.
 
         Args:
-            other: The other vector.
+            other (Vector): The other vector.
 
         Returns:
             float: The distance between the two vectors.
         """
 
-    def within(self, lower: List[float], upper: List[float]) -> bool:
+    def within(self, lower: Vector, upper: Vector) -> bool:
         """Checks if the vector is within the given bounds.
 
         Args:
-            lower: The lower bound.
-            upper: The upper bound.
+            lower (Vector): The lower bound.
+            upper (Vector): The upper bound.
 
         Returns:
             bool: True if the vector is within the bounds, False otherwise.
@@ -47,25 +47,46 @@ class VectorDatabase:
         TODO: deletion support
 
         Args:
-            vector: The vector to insert.
+            vector (Vector): The vector to insert.
         """
 
     def search(self, query_vector: Vector, *, k: int) -> List[Vector]:
         """Searches the database for nearest neighbors.
 
         Args:
-            query_vector: The vector to search for.
-            k: The number of nearest neighbors to return.
+            query_vector (Vector): The vector to search for.
+            k (int): The number of nearest neighbors to return.
 
         Returns:
-            List[Vector]: The nearest neighbors.
+            list[Vector]: The nearest neighbors.
+        """
+
+    def save(self, base_path: str) -> None:
+        """Saves the vector database to a path.
+
+        Args:
+            base_path (str): The base path of the vector database.
+
+        Returns:
+            None
+        """
+
+    @staticmethod
+    def load(base_path: str) -> "VectorDatabase":
+        """Loads a vector database from a path.
+
+        Args:
+            base_path (str): The base path of the vector database.
+
+        Returns:
+            VectorDatabase: The loaded vector database.
         """
 
 def load_bin(filename: str) -> Vector:
     """Loads a vector from a binary file.
 
     Args:
-        filename: The filename of the binary file.
+        filename (str): The filename of the binary file.
 
     Returns:
         Vector: The loaded vector.
@@ -75,6 +96,6 @@ def create_bin(filename: str, vector: Vector) -> None:
     """Creates a vector in a binary file.
 
     Args:
-        filename: The filename of the binary file.
-        vector: The vector to create.
+        filename (str): The filename of the binary file.
+        vector (Vector): The vector to create.
     """

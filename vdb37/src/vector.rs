@@ -1,7 +1,7 @@
 use pyo3::prelude::*;
 use std::fmt;
 
-#[derive(Clone, Default)]
+#[derive(Clone, Default, Debug)]
 #[pyclass]
 pub struct Vector {
     pub coordinates: Vec<f64>,
