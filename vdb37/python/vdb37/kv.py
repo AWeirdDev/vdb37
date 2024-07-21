@@ -1,5 +1,3 @@
-import pickle
-
 import os
 from typing import Dict
 
@@ -17,10 +15,10 @@ class KV:
     def get(self, key: str) -> VectorDatabase:
         return self.kv[key]
 
-    def update(self, key: str, value: VectorDatabase) -> None:
-        self.kv[key] = value
+    def update(self, key: str, db: VectorDatabase) -> None:
+        self.kv[key] = db
 
-    def save(self, base_path: str = "kv"):
+    def save(self, base_path: str = "kv") -> None:
         for key, db in self.kv.items():
             db.save(os.path.join(base_path, key))
 
